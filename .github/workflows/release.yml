@@ -30,12 +30,6 @@ jobs:
     - name: Publish self-contained executable
       run: dotnet publish MouseKeyboardTracker.csproj --configuration Release --runtime win-x64 --self-contained true --output ./publish
       
-    - name: Create release archive
-      run: |
-        cd publish
-        7z a -tzip ../MouseKeyboardTracker-${{ github.ref_name }}-win-x64.zip *
-        cd ..
-      
     - name: Get release info
       id: release_info
       run: |
@@ -51,6 +45,6 @@ jobs:
         prerelease: false
         generate_release_notes: true
         files: |
-          MouseKeyboardTracker-${{ github.ref_name }}-win-x64.zip
+          ./publish/MouseKeyboardTracker.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
